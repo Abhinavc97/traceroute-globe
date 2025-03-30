@@ -123,7 +123,7 @@ handleSubmit = (e) => {
       
       try {
         //const response = await axios.get(`http://127.0.0.1:5000/traceroute/${domain}`);
-        const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+        const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
         const response = await axios.get(`${API_URL}/traceroute/${domain}`);
         
         // Check if the response data is empty or undefined
@@ -625,14 +625,6 @@ handleSubmit = (e) => {
             <div style={{ display: "flex", alignItems: "center", margin: "5px 0" }}>
             <div style={{ width: "15px", height: "15px", borderRadius: "50%", background: "rgba(255, 0, 0, 1.0)", marginRight: "8px" }}></div>
               <span>Ending Point</span>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", margin: "5px 0" }}>
-              <div style={{ width: "15px", height: "15px", borderRadius: "50%", background: "rgba(255, 255, 255, 0.8)", marginRight: "8px" }}></div>
-              <span>Regular Hop</span>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", margin: "5px 0" }}>
-              <div style={{ width: "15px", height: "15px", borderRadius: "50%", background: "rgba(100, 100, 255, 0.8)", marginRight: "8px" }}></div>
-              <span>Other Hop</span>
             </div>
           </div>
     

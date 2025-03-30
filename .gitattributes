@@ -1,1 +1,2 @@
 backend/IP2LOCATION-LITE-DB11.csv filter=lfs diff=lfs merge=lfs -text
+backend/ip_database.db filter=lfs diff=lfs merge=lfs -text
