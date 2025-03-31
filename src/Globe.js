@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import SlideUpPanel from "./SlideUpPanel";
 
 class TracerouteGlobe extends Component {
   constructor(props) {
@@ -584,7 +585,7 @@ handleSubmit = (e) => {
         </div>
       </div>
     )}
-        
+         <SlideUpPanel />
         <div 
           ref={this.globeContainerRef} 
           style={{ 
@@ -594,54 +595,7 @@ handleSubmit = (e) => {
           }}
         />
 
-        <div style={{
-          position: "absolute",
-          bottom: "20px",
-          left: "0",
-          right: "0",
-          margin: "0 auto",
-          width: "80%",
-          maxWidth: "600px",
-          padding: "15px",
-          background: "rgba(0,0,0,0.7)",
-          borderRadius: "8px",
-          zIndex: 1000,
-          display: "flex",
-          flexDirection: "column",
-          color: "white",
-          fontFamily: "Arial, sans-serif"
-        }}>
-          <div style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "10px", textAlign: "center" }}>
-            Traceroute Legend
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around" }}>
-          {/* Points legend */}
-            <div style={{ margin: "5px 10px" }}>
-            <div style={{ fontSize: "14px", marginBottom: "5px", textDecoration: "underline" }}>Points</div>
-            <div style={{ display: "flex", alignItems: "center", margin: "5px 0" }}>
-              <div style={{ width: "15px", height: "15px", borderRadius: "50%", background: "rgba(0, 255, 0, 1.0)", marginRight: "8px" }}></div>
-              <span>Starting Point</span>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", margin: "5px 0" }}>
-            <div style={{ width: "15px", height: "15px", borderRadius: "50%", background: "rgba(255, 0, 0, 1.0)", marginRight: "8px" }}></div>
-              <span>Ending Point</span>
-            </div>
-          </div>
-    
-            {/* Lines legend */}
-            <div style={{ margin: "5px 10px" }}>
-              <div style={{ fontSize: "14px", marginBottom: "5px", textDecoration: "underline" }}>Connections</div>
-              <div style={{ display: "flex", alignItems: "center", margin: "5px 0" }}>
-                <div style={{ width: "30px", height: "3px", background: "rgba(255, 255, 255, 0.8)", marginRight: "8px" }}></div>
-                <span>Direct Connection</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", margin: "5px 0" }}>
-                <div style={{ width: "30px", height: "3px", background: "rgba(255, 50, 50, 0.8)", marginRight: "8px" }}></div>
-                <span>Indirect Connection (Missing Hops)</span>
-              </div>
-            </div>
-          </div>
-        </div>
+       
       </div>
     );
   }
