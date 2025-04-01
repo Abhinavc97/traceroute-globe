@@ -1,0 +1,188 @@
+.hop-list-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: 100vh;
+    transition: transform 0.4s ease-in-out;
+    z-index: 100;
+  }
+  
+  /* Closed state - moved off screen */
+  .hop-list-container.closed {
+    transform: translateX(320px);
+  }
+  
+  /* Open state - visible */
+  .hop-list-container.open {
+    transform: translateX(0);
+  }
+  
+  .hop-list-content {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    overflow-y: auto;
+    color: white;
+    font-family: Arial, sans-serif;
+    box-shadow: -3px 0 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Handle styling */
+  .hop-list-handle {
+    position: absolute;
+    top: 50%;
+    left: -40px;
+    width: 40px;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 8px 0 0 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateY(-50%);
+    transition: background-color 0.3s ease;
+    box-shadow: -3px 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .hop-list-handle:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+  
+  .handle-icon {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: #4285f4;
+  }
+  
+  .handle-label {
+    writing-mode: sideways-rl;
+    transform: rotate(180deg);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: #fff;
+  }
+  
+  .hop-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .hop-list-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+  
+  .hop-count {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 3px 8px;
+    border-radius: 12px;
+  }
+  
+  .hop-list {
+    padding: 10px 0;
+  }
+  
+  .hop-item {
+    display: flex;
+    padding: 10px 20px;
+  }
+  
+  .hop-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 15px;
+    min-width: 24px;
+  }
+  
+  .hop-point {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(0, 100, 255, 1.0);
+  }
+  
+  .hop-point.start {
+    background-color: rgba(0, 255, 0, 1.0);
+    width: 14px;
+    height: 14px;
+  }
+  
+  .hop-point.end {
+    background-color: rgba(255, 100, 100, 1.0);
+    width: 14px;
+    height: 14px;
+  }
+  
+  .hop-line {
+    width: 2px;
+    background-color: rgba(255, 255, 255, 0.8);
+    height: 100%;
+    margin-top: 4px;
+    min-height: 30px;
+  }
+  
+  .hop-line.unknown {
+    background-color: rgba(255, 50, 50, 0.8);
+  }
+  
+  .hop-details {
+    flex: 1;
+  }
+  
+  .hop-location {
+    font-weight: 500;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .hop-tag {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 8px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  
+  .start-tag {
+    background-color: rgba(0, 255, 0, 0.2);
+    color: rgba(0, 255, 0, 1.0);
+  }
+  
+  .end-tag {
+    background-color: rgba(255, 100, 100, 0.2);
+    color: rgba(255, 100, 100, 1.0);
+  }
+  
+  .hop-ip {
+    font-size: 0.85rem;
+    opacity: 0.7;
+  }
+  
+  .unknown-hops-indicator {
+    margin-top: 4px;
+    font-size: 0.75rem;
+    color: rgba(255, 100, 100, 0.9);
+    background-color: rgba(255, 50, 50, 0.1);
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+  }

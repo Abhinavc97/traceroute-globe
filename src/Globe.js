@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import SlideUpPanel from "./SlideUpPanel";
+import HopList from "./HopList";
 
 class TracerouteGlobe extends Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class TracerouteGlobe extends Component {
       loading: false,
       error: null,
       domain: "",
-      isValidDomain: true,                      // Domain validity flag
+      isValidDomain: true,  // Domain validity flag
+      dataReceived: false, // Track if we've received trace data
     };
     
     // Create container reference
@@ -69,7 +71,8 @@ handleSubmit = (e) => {
     this.setState({ 
       loading: true, 
       error: null,
-      hops: []
+      hops: [],
+      dataReceived: false 
     });
     
     // Start fetching traceroute data
@@ -133,7 +136,8 @@ handleSubmit = (e) => {
           this.setState({ 
             error: `Unable to resolve domain "${domain}". Please check the domain name and try again.`,
             loading: false,
-            hops: []
+            hops: [],
+            dataReceived: false
           });
           
           // Reset globe state
@@ -143,7 +147,7 @@ handleSubmit = (e) => {
         }
         
         // Normal processing for successful traceroute data
-        this.setState({ hops: response.data, loading: false }, () => {
+        this.setState({ hops: response.data, loading: false, dataReceived: true }, () => {
           this.updateVisualization();
         });
       } catch (err) {
@@ -190,7 +194,8 @@ handleSubmit = (e) => {
     this.setState({ 
       error: errorMessage, 
       loading: false, 
-      hops: [] 
+      hops: [], 
+      dataReceived: false 
     });
     
     // Reset globe state
@@ -467,7 +472,7 @@ handleSubmit = (e) => {
   }
   
   render() {
-    const { loading, error, domain, isValidDomain } = this.state;
+    const { loading, error, domain, isValidDomain,hops, dataReceived } = this.state;
     
     return (
       <div className="traceroute-globe-container">
@@ -585,6 +590,13 @@ handleSubmit = (e) => {
         </div>
       </div>
     )}
+        <HopList 
+          hops={hops} 
+          isLoading={loading} 
+          isDataReceived={dataReceived} 
+        />
+        
+        
          <SlideUpPanel />
         <div 
           ref={this.globeContainerRef} 
