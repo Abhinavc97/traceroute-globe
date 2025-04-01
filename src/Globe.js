@@ -384,9 +384,10 @@ handleSubmit = (e) => {
         .arcDashGap(0.1)
         .arcDashAnimateTime('dashAnimateTime')
         .arcDashInitialGap('dashInitialGap')
-        .arcAltitude(0.1)
+        .arcAltitudeAutoScale(0.5)
         .arcCurveResolution(64)
-        .arcCircularResolution(64);
+        .arcCircularResolution(64)
+        ;
 
       // After visualization is updated, focus the camera on the traceroute path
       this.focusCameraOnTraceroute(validHops);  
