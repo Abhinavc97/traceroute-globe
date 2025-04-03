@@ -92,7 +92,6 @@ handleSubmit = (e) => {
     }
     
     try {
-      // Dynamically import the Globe.js library
       const GlobeModule = await import('globe.gl');
       const Globe = GlobeModule.default;
       
@@ -101,9 +100,9 @@ handleSubmit = (e) => {
         (this.globeContainerRef.current)
         .globeImageUrl("//unpkg.com/three-globe/example/img/earth-dark.jpg")
         .bumpImageUrl("//unpkg.com/three-globe/example/img/earth-topology.png")
-        .backgroundImageUrl("//unpkg.com/three-globe/example/img/night-sky.png") // Optional: adds a starry background
+        .backgroundImageUrl("//unpkg.com/three-globe/example/img/night-sky.png") 
         .backgroundColor("#000011")
-        .atmosphereColor("rgba(127, 127, 255, 0.3)") // Optional: adds a subtle glow
+        .atmosphereColor("rgba(127, 127, 255, 0.3)") 
         .pointOfView({ lat: 30, lng: 0, altitude: 2.5 });
       
       // Enable auto-rotation for a more dynamic view
@@ -113,7 +112,6 @@ handleSubmit = (e) => {
       }
       
       // Fetch traceroute data
-      //this.fetchTracerouteData(); don't uncomment
     } catch (err) {
       console.error("Failed to initialize globe:", err);
       this.setState({ error: `Globe initialization error: ${err.message}`, loading: false });
@@ -126,13 +124,12 @@ handleSubmit = (e) => {
       const domain = target || this.state.domain;
       
       try {
-        //const response = await axios.get(`http://127.0.0.1:5000/traceroute/${domain}`);
         const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
         const response = await axios.get(`${API_URL}/traceroute/${domain}`);
         
         // Check if the response data is empty or undefined
         if (!response.data || (Array.isArray(response.data) && response.data.length === 0)) {
-          // This could indicate an unknown host error
+          // an unknown host error
           this.setState({ 
             error: `Unable to resolve domain "${domain}". Please check the domain name and try again.`,
             loading: false,
@@ -172,7 +169,6 @@ handleSubmit = (e) => {
     
     if (err.response) {
       // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
       switch (err.response.status) {
         case 404:
           errorMessage = `Unable to resolve domain "${domain}". Please check the domain name and try again.`;
@@ -234,7 +230,7 @@ handleSubmit = (e) => {
       const centerLng = totalLng / validHops.length;
       
       // Determine appropriate altitude based on distance between hops
-      // We'll calculate the maximum distance between any two consecutive hops
+      //calculate the maximum distance between any two consecutive hops
       let maxDistance = 0;
       
       for (let i = 0; i < validHops.length - 1; i++) {
@@ -260,7 +256,6 @@ handleSubmit = (e) => {
       }
       
       // Translate distance to altitude (higher for longer distances)
-      // These values can be adjusted based on testing
       let altitude;
       if (maxDistance > 10000) {
         altitude = 2.5; // Global route - view from far
@@ -292,7 +287,7 @@ handleSubmit = (e) => {
     }
     
     try {
-      // First, filter out only the hops with valid location data for points
+      // Filter out only the hops with valid location data for points
       const validHops = hops.filter(hop => hop.latitude && hop.longitude);
 
       // Stop auto-rotation when we have data
@@ -362,12 +357,11 @@ handleSubmit = (e) => {
           // If there are unknown hops between, use red color
           color: hasUnknownHopsBetween ? 
             "rgba(255, 50, 50, 0.8)" : // Red for connections with unknown hops in between
-           // `rgba(${255 * (i / (Math.max(validHops.length - 2, 1)))}, 100, ${255 - 255 * (i / (Math.max(validHops.length - 2, 1)))}, 0.8)`,
             "rgba(255, 255, 255, 0.8)",
           dashAnimateTime: 1500,
           dashInitialGap: 1,
           // Make the line thicker for segments with unknown hops to emphasize them
-          stroke: 0.75,//hasUnknownHopsBetween ? 1.3 : 1.0,
+          stroke: 0.75,
           // Store information for our animation logic
           isGapSegment: hasUnknownHopsBetween,
           originalStartIndex: currentIndex,
@@ -426,7 +420,7 @@ handleSubmit = (e) => {
       // Create an array with ONLY the current arc
       const singleArcData = [{
         ...currentArc,
-        dashInitialGap: 0, // Make it visible
+        dashInitialGap: 0, 
         dashAnimateTime: currentArc.isGapSegment ? 2000 : 1500
       }];
       
@@ -434,7 +428,6 @@ handleSubmit = (e) => {
       this.globe.arcsData(singleArcData);
       
       // Calculate how long to wait before showing the next arc
-      // We wait for the full animation time plus a small pause
       const animationDuration = currentArc.isGapSegment ? 2000 : 1500;
       const pauseDuration = 300; // Small pause between arcs
       
@@ -477,7 +470,7 @@ handleSubmit = (e) => {
     
     return (
       <div className="traceroute-globe-container">
-        {/* Search form at the top */}
+        {/* Search form  */}
         <div style={{
           position: "absolute",
           top: "10px",
@@ -607,6 +600,35 @@ handleSubmit = (e) => {
             background: "#000011" 
           }}
         />
+
+        {/* GitHub Repository Link */}
+<div style={{
+  position: "absolute",
+  bottom: "10px",
+  right: "10px",
+  background: "rgba(0,0,0,0.7)",
+  padding: "5px 10px",
+  borderRadius: "4px",
+  zIndex: 1000,
+}}>
+  <a 
+    href="https://github.com/Abhinavc97/traceroute-globe.git" 
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      color: "#ffffff",
+      textDecoration: "none",
+      display: "flex",
+      alignItems: "center",
+      fontSize: "14px",
+    }}
+  >
+    <svg height="16" width="16" viewBox="0 0 16 16" style={{marginRight: "5px"}}>
+      <path fill="#ffffff" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+    </svg>
+    GitHub
+  </a>
+</div>
 
        
       </div>

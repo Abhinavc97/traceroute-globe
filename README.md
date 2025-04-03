@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+# Traceroute 3D Visualization
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+Traceroute 3D Visualization is a web-based tool that visually represents the path network packets take across the globe. This project provides an interactive 3D globe where traceroute hops are animated as arcs, making it easier to understand network traversal. The visualization helps users see how their data moves through the internet, highlighting direct and indirect hops, unknown nodes, and route loops.
 
-## Available Scripts
+## Features
+- **3D Globe Visualization**: Uses ThreeJS/WebGL-based UI component for globe data visualization to display network traversal.
+- **Animated Path Traversal**: Arcs animate in succession as data moves from hop to hop. The animation loops once traversal is completed.
+- **Hop Indicators**:
+  - The traversal starts from a **green dot** marking the origin.
+  - The traversal ends at a **red dot** marking the destination.
+  - **Red arcs** represent indirect hops where intermediate nodes are unknown.
+- **List View of Hops**:
+  - Clicking the "Show Hops" toggle slides in a list displaying all hops in sequence.
+  - The same indicators (green for start, red for end, red arcs for indirect hops) apply to the list.
+- **Optimized Animation**:
+  - If multiple IP addresses resolve to the same physical location (latitude & longitude), arcs between them are skipped to keep the visualization clean.
+- **Search and Input Validation**:
+  - The search bar at the top validates input format.
+  - Handles errors for incorrect or non-existent domain names.
+- **Deployment Options**:
+  - Hosted as a web app for an instant demonstration.
+  - Users can run it locally to trace routes from their own machines by adjusting environment variables.
 
-In the project directory, you can run:
+## Origin Point Information
+When using Traceroute Visualizer, the originating system is hosted in an AWS data center in Columbus, Ohio. This means all traffic first travels through AWS's backbone infrastructure before reaching the public internet. AWS often employs private or internal routing mechanisms, which can cause initial hops to appear different from what you'd see on a standard traceroute. However, this setup allows you to test connectivity from our system to any destination worldwide, providing an independent perspective on network performance beyond your current location.
 
-### `npm start`
+## Network Path Visualization
+Visualizing network paths through traceroute provides valuable insights into the geographic journey of an internet connection. Our online traceroute tool processes raw traceroute output, extracts relevant data, and plots the results on an interactive world map. Starting from our server on the East Coast of the USA, this test displays each reachable hop along the route. However, geolocation accuracy can vary, and occasional discrepancies may occur in the mapped results.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Installation & Setup
+To run the project locally:
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/Abhinavc97/traceroute-globe.git
+   cd traceroute-globe
+   ```
+2. Install dependencies:
+   ```sh
+   pip3 install backend/requirements.txt
+   ```
+   ```sh
+   npm install
+   ```
+3. Set up environment variables:
+   - Update `.env` with the required API keys and local configurations.
+4. Start the server:
+   ```sh
+   python3 backend/app.py
+   ```
+5. Start the react app:
+   ```sh
+   npm start
+   ```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Usage
+- Enter a domain name in the search bar.
+- Watch the animation of hops appearing on the 3D globe.
+- Toggle the "Show Hops" button to see the list view.
 
-### `npm test`
+## Technologies Used
+- **Frontend**: React, Three.js, WebGL
+- **Backend**: Python, Flask
+- **Data Processing**: GeoIP lookup, Traceroute analysis
+- **Geolocation Database**: IP2LOCATION-LITE DB11 converted to SQLite3
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Geolocation Database
+The application uses IP2LOCATION-LITE DB11 for resolving IP addresses to geographical coordinates (latitude and longitude) and obtaining region and city information. The database workflow:
+1. The database is downloaded from ip2location.com as a CSV file
+2. The CSV is converted to SQLite3 format for significantly faster lookups
+3. This optimization improves the speed and performance of geolocation queries during traceroute analysis
 
-### `npm run build`
+The SQLite3 database provides an efficient method for retrieving geographical data without relying on external API calls for each IP lookup.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Future Improvements
+- Enhancing visual customization options for user preferences.
+- Expanding the geolocation database with more detailed network infrastructure information.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Demo
+A hosted version of the application is available [here](https://traceroute-globe.vercel.app/).

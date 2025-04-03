@@ -31,36 +31,62 @@ const SlideUpPanel = () => {
       <div>
         <h3 style={{ marginTop: 0, color: '#4285f4' }}>About Traceroute Visualizer</h3>
         <p>
-          Traceroute Visualizer offers a unique approach compared to running a traceroute from your own computer. 
-          Typically, a traceroute is initiated locally when diagnosing network outages or packet loss, helping 
-          identify where issues occur along the route. The results highlight hops with abnormal latency, packet loss, 
-          or complete failure to forward packets.
+          Traceroute Visualizer is an interactive web-based tool that transforms complex network
+        data into a visually stunning 3D experience. Built using React, Three.js, and WebGL technology, this application renders a 
+        detailed representation of how data packets travel across the internet as they move from our server to any destination worldwide.
         </p>
         <p>
-          When using Traceroute Visualizer, the originating system is hosted in an AWS data center in Columbus, Ohio. 
-          This means all traffic first travels through AWS's backbone infrastructure before reaching the public internet. 
-          AWS often employs private or internal routing mechanisms, which can cause initial hops to appear different from 
-          what you'd see on a standard traceroute. However, this setup allows you to test connectivity from our system 
-          to any destination worldwide, providing an independent perspective on network performance beyond your current location.
+        Originating from an AWS data center in Columbus, Ohio, our traceroute visualization provides a unique perspective on global network 
+        connectivity. The application traces the path of data packets through multiple network hops, displaying each connection as an animated 
+        arc on an interactive globe. This visualization makes it easy to understand network topology, identify potential bottlenecks, and observe 
+        how your data traverses continents.
+        </p>
+        <p>
+        The tool processes raw traceroute data through a Python/Flask backend, which leverages the IP2LOCATION database
+         to accurately map IP addresses to geographical coordinates. The result is a comprehensive, real-time view of 
+         internet infrastructure that transforms technical network data into an accessible, engaging visual experience.
         </p>
       </div>
     ),
+    whatis: (
+        <div>
+        <h3 style={{ marginTop: 0, color: '#4285f4' }}>What is Traceroute?</h3>
+        <p>
+        Traceroute is a network diagnostic tool that maps the journey of data packets across the internet from source to destination.
+        Unlike packet capture tools that analyze data content, traceroute focuses specifically on identifying the path data travels 
+        through the internet infrastructure. When you connect to a website or online service, your data traverses multiple devices and
+        networks—primarily routers—before reaching its destination.
+        </p>
+        <p>
+        The traceroute command works by sending Internet Control Message Protocol (ICMP) packets to each router along the transmission path.
+         These packets are designed with incrementing Time To Live (TTL) values, forcing each router in the chain to respond with 
+         a time-exceeded message. This clever technique reveals each hop in the journey and measures the round-trip time to each intermediate point.  
+        </p>
+        </div>
+    ),
     mapping: (
       <div>
-        <h3 style={{ marginTop: 0, color: '#4285f4' }}>Mapping Traceroute</h3>
+        <h3 style={{ marginTop: 0, color: '#4285f4' }}>Path Visualization</h3>
         <p>
-          Visualizing network paths through traceroute provides valuable insights into the geographic journey of an 
-          internet connection. Our online traceroute tool processes raw traceroute output, extracts relevant data, and plots 
-          the results on an interactive world map.
+        The path visualization displayed on our 3D globe represents the actual route your data takes when traveling from 
+        our server to your requested destination. Each arc on the globe corresponds to a "hop" between network nodes, 
+        with a green marker indicating the origin point and a red marker showing the final destination.
         </p>
         <p>
-          Starting from our server on the East Coast of the USA, this test displays response times for each reachable hop 
-          along the route. However, geolocation accuracy can vary, and occasional discrepancies may occur in the mapped results.
+        As you observe the visualization, you'll notice data packets first travel through AWS's backbone infrastructure before reaching 
+        the public internet. This internal routing may cause initial hops to appear different from standard traceroute results you might 
+        run locally. Red arcs indicate indirect hops where intermediate nodes couldn't be identified or precise location data wasn't available.
         </p>
         <p>
-          You'll notice that the plotted paths originate from the testing server itself. This approach clearly illustrates 
-          the response times between the source and each destination hop. While movies often depict seamless traceroute 
-          visualizations, accurately mapping IP addresses remains a challenge due to the complexities of IP geolocation data.
+        The animated sequence shows how data moves sequentially from one point to another, giving you insight into the geographic journey of your 
+        internet connection. For clarity, our visualization optimizes the display by skipping redundant arcs when multiple IP addresses resolve 
+        to the same physical location.
+        </p>
+        <p>
+        While we strive for accuracy, geolocation data can sometimes contain discrepancies due to the complex nature of IP address allocation and 
+        the dynamic routing of internet traffic. The visualization provides a general representation of network paths rather than an exact
+         geographical mapping. Toggle the "Show Hops" feature to see a detailed list view of each step in the network journey alongside the 
+         visual representation.  
         </p>
       </div>
     ),
@@ -146,17 +172,22 @@ const SlideUpPanel = () => {
           flexDirection: "column"
         }}
       >
-        {/* Tab navigation - now justified */}
+        {/* Tab navigation */}
         <div style={{
           display: "flex",
           borderBottom: "1px solid rgba(255,255,255,0.2)",
           background: "rgba(20,20,20,0.5)",
-          justifyContent: "space-between" // This spaces the tabs evenly
+          justifyContent: "space-between"
         }}>
           <TabButton 
             label="About" 
             isActive={activeTab === 'about'} 
             onClick={() => setActiveTab('about')}
+          />
+           <TabButton 
+            label="What is Traceroute?" 
+            isActive={activeTab === 'whatis'} 
+            onClick={() => setActiveTab('whatis')}
           />
           <TabButton 
             label="Mapping" 
@@ -198,7 +229,7 @@ const TabButton = ({ label, isActive, onClick }) => (
       fontWeight: isActive ? "bold" : "normal",
       transition: "all 0.2s ease",
       textAlign: "center",
-      flex: 1 // Make each tab take equal width
+      flex: 1 
     }}
     onClick={onClick}
   >

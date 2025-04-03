@@ -22,7 +22,6 @@ const HopList = ({ hops, isLoading, isDataReceived }) => {
   
   return (
     <div className={`hop-list-container ${isOpen ? 'open' : 'closed'}`}>
-      {/* The handle is only visible when data is received and not loading */}
       {isDataReceived && !isLoading && (
         <div 
           className={`hop-list-handle ${isOpen ? 'open' : 'closed'}`}
